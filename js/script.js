@@ -41,31 +41,47 @@ for (let i = 0; i < randNum.length; i++) {
 } 
 
 // numeri pushati dal prompt
-
+let second = 30
 
 setTimeout(() => {
     container.innerHTML = ""
-    setTimeout(() => {
-        let arrayNum = [];
-        for (let i = 0; i < 5; i++) {
-            let ask =parseInt(prompt("ridimmi i numeri"))
-            arrayNum.push(ask);
+   const timer = setInterval(() => {
+        if (second > 0) {
+            container.innerHTML = `incomincia a ricordarti i numeri mancano ${second}`
+            second -= 1
+        }else {
+            clearInterval(timer)
+            container.innerHTML = "VIA"
+            setTimeout(() => {
+                let arrayNum = [];
+                for (let i = 0; i < 5; i++) {
+                    let ask =parseInt(prompt("ridimmi i numeri"))
+                    arrayNum.push(ask);
+                }
+                let cond = 0
+                let arrayCond = []
+                for (let i = 0; i < 5; i++) {
+                    if (randNum[i] == arrayNum[i] && !isNaN(arrayNum[i])) {
+                        cond ++
+                        arrayCond.push(arrayNum[i])
+                    }
+                }
+                for (let i = 0; i < arrayCond.length; i++) {
+                    container.innerHTML = `hai indovinato ${cond} numeri le quali erano `
+                    container2.innerHTML += arrayCond[i] + " ";
+                }    
+                console.log(cond);
+            },200)
         }
-        let cond = 0
-        let arrayCond = []
-        for (let i = 0; i < 5; i++) {
-            if (randNum[i] == arrayNum[i] && !isNaN(randNum[i] && !isNaN(arrayNum[i]))) {
-                cond ++
-                arrayCond.push(arrayNum[i])
-            }
-        }
-        for (let i = 0; i < arrayCond.length; i++) {
-            container.innerHTML = `hai indovinato ${cond} numeri le quali erano `
-            container2.innerHTML += arrayCond[i] + " ";
-        }    
-        console.log(cond);
-    },200)
+        
+    },1000)
 }, 3000)
+
+
+
+
+
+
 
 
 
