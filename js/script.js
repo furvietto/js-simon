@@ -54,38 +54,23 @@ setTimeout(() => {
             container.innerHTML = "VIA"
             setTimeout(() => {
                 let arrayNum = [];
-                for (let i = 0; i < 5; i++) {
-                    let ask =parseInt(prompt("ridimmi i numeri"))
-                    arrayNum.push(ask);
-                }
                 let cond = 0
                 let arrayCond = []
                 for (let i = 0; i < 5; i++) {
+                    let ask =parseInt(prompt("ridimmi i numeri"))
+                    while (isNaN(ask)) {
+                        ask = parseInt(prompt("ridimmi i numeri"))
+                    }
+                    arrayNum.push(ask);
                     if (randNum[i] == arrayNum[i] && !isNaN(arrayNum[i])) {
                         cond ++
                         arrayCond.push(arrayNum[i])
                     }
                 }
-                for (let i = 0; i < arrayCond.length; i++) {
-                    container.innerHTML = `hai indovinato ${cond} numeri le quali erano `
-                    container2.innerHTML += arrayCond[i] + " ";
-                }    
+                    container.innerHTML = `hai indovinato ${cond} numeri le quali erano ${arrayCond}`
+
                 console.log(cond);
             },200)
-        }
-        
+        }       
     },1000)
 }, 3000)
-
-
-
-
-
-
-
-
-
-
-
-  
-
