@@ -7,7 +7,10 @@
 // * Pensate prima in italiano.
 // * Dividete in piccoli problemi la consegna.
 // * Individuate gli elementi di cui avete bisogno per realizzare il programma.
-
+// Vi lascio anche qualche BONUS per il weekend lungo:
+// L'utente non deve poter inserire numeri minori di zero e del massimo che avete deciso;
+// L'utente non può scrivere 2 o più volte lo stesso numero;
+// Proviamo a creare dei livelli di difficoltà selezionabili all'inizio: più il livello è alto più numeri compaiono :party_parrot:
 
 
 // Funzioni
@@ -15,13 +18,13 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
   }
 
-function randomFunc() {
+function randomFunc(length) {
     let randomNumber = [];
 
-  while (randomNumber.length < 5) {
-      let random = getRndInteger(1,5)
+  while (randomNumber.length < length) {
+      let random = getRndInteger(1,100)
       while (randomNumber.includes(random)) {
-          random = getRndInteger(1,5)
+          random = getRndInteger(1,100)
       }
       randomNumber.push(random);    
   }
@@ -29,48 +32,75 @@ function randomFunc() {
 }
 
 
+
+
+
 // numeri random creati tramite funzione
-let randNum = randomFunc();
+const button = document.querySelector("button")
 
-console.log(randNum);
-const container = document.querySelector(".container");
-const container2 = document.querySelector(".container2")
+button.addEventListener("click" , function () {
 
-for (let i = 0; i < randNum.length; i++) {
-    container.innerHTML += randNum[i] + " ";
-} 
+    const level = document.getElementById("level")
+    const levelSelect = level.value
 
-// numeri pushati dal prompt
-let second = 30
+    let randNum = randomFunc();
 
-setTimeout(() => {
-    container.innerHTML = ""
-   const timer = setInterval(() => {
-        if (second > 0) {
-            container.innerHTML = `incomincia a ricordarti i numeri mancano ${second}`
-            second -= 1
-        }else {
-            clearInterval(timer)
-            container.innerHTML = "VIA"
-            setTimeout(() => {
-                let arrayNum = [];
-                let cond = 0
-                let arrayCond = []
-                for (let i = 0; i < 5; i++) {
-                    let ask =parseInt(prompt("ridimmi i numeri"))
-                    while (isNaN(ask)) {
-                        ask = parseInt(prompt("ridimmi i numeri"))
+
+    switch (levelSelect){
+        default:
+        case "easy":
+            randNum = randomFunc(5);
+
+        case "medium":
+            randNum = randomFunc(10);
+
+        case "hard" :
+            randNum = randomFunc(15);
+    }
+    
+
+    console.log(randNum);
+    const container = document.querySelector(".container");
+    
+    for (let i = 0; i < randNum.length; i++) {
+        container.innerHTML += randNum[i] + " ";
+    } 
+    
+    // numeri pushati dal prompt
+    let second = 5
+    
+    setTimeout(() => {
+        container.innerHTML = ""
+       const timer = setInterval(() => {
+            if (second > 0) {
+                container.innerHTML = `incomincia a ricordarti i numeri mancano ${second}`
+                second --
+            }else {
+                clearInterval(timer)
+                container.innerHTML = "VIA"
+                setTimeout(() => {
+                    let arrayNum = []; //numeri prompt
+                    let cond = 0;
+                    let arrayCond = [];
+                    for (let i = 0; i < randNum.length; i++) {
+                        let ask =parseInt(prompt("inserisci un numero da uno a 100"))
+                        while (isNaN(ask) || ask < 0 || ask > 100)  {
+                            ask = parseInt(prompt("numero non valido riprova"))
+                        }
+                        while (arrayNum.includes(ask)) {
+                            ask = parseInt(prompt("numero doppio non valido riprova"))
+                        }
+    
+                        arrayNum.push(ask);
+                        if (randNum.includes(arrayNum[i])) {
+                            cond ++
+                            arrayCond.push(arrayNum[i])
+                        }
                     }
-                    arrayNum.push(ask);
-                    if (randNum[i] == arrayNum[i] && !isNaN(arrayNum[i])) {
-                        cond ++
-                        arrayCond.push(arrayNum[i])
-                    }
-                }
                     container.innerHTML = `hai indovinato ${cond} numeri le quali erano ${arrayCond}`
-
-                console.log(cond);
-            },200)
-        }       
-    },1000)
-}, 3000)
+    
+                },200)
+            }       
+        },1000)
+    }, 3000) 
+})
