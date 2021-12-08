@@ -38,8 +38,10 @@ function randomFunc(length) {
 // numeri random creati tramite funzione
 const button = document.querySelector("button")
 
-button.addEventListener("click" , function () {
-
+button.addEventListener("click" , function pippo() {
+    const container = document.querySelector(".container");
+    container.innerHTML = ""
+    this.removeEventListener("click", pippo)
     const level = document.getElementById("level")
     const levelSelect = level.value
 
@@ -61,7 +63,7 @@ button.addEventListener("click" , function () {
     
 
     console.log(randNum);
-    const container = document.querySelector(".container");
+    
     
     for (let i = 0; i < randNum.length; i++) {
         container.innerHTML += randNum[i] + " ";
@@ -99,7 +101,7 @@ button.addEventListener("click" , function () {
                         }
                     }
                     container.innerHTML = `hai indovinato ${cond} numeri le quali erano ${arrayCond}`
-    
+                    button.addEventListener("click" , pippo)
                 },200)
             }       
         },1000)
