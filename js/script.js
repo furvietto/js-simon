@@ -50,12 +50,13 @@ button.addEventListener("click" , function () {
         default:
         case "easy":
             randNum = randomFunc(5);
-
+             break;
         case "medium":
             randNum = randomFunc(10);
-
+            break;
         case "hard" :
             randNum = randomFunc(15);
+            break
     }
     
 
